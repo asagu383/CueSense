@@ -15,3 +15,7 @@ transcript = " ".join(segment.text.strip() for segment in segments)
 
 # Display transcription
 print("Transcription:", transcript)
+
+# Save the actual transcription to a text file
+with open("cue01_transcript.txt", "w", encoding="utf-8") as file:
+    file.write(transcript)

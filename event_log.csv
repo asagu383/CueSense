@@ -1,0 +1,7 @@
+clip_id,transcript,detected_cue
+cue01,"Wait, I think I heard something just now.",FOOTSTEPS
+cue02,There's no turning back now.,CURTAIN CLOSE
+cue03,Something strange is going on there.,NONE
+nocue01,I think we should go home now.,NONE
+nocue02,Did you remember to bring your keys?,NONE
+nocue03,"Wait, I think I left something behind.",NONE

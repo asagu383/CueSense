@@ -9,7 +9,11 @@ cues = {
 }
 
 # Ask user to enter a line of dialogue
-dialogue = input("Enter a line of dialogue: ")
+# dialogue = input("Enter a line of dialogue: ")
+
+# Change asking user to enter dialogue to just reading text from a file and using that as dialogue
+with open("cue01_transcript.txt", "r", encoding="utf-8") as file:
+    dialogue = file.read().strip()
 
 # Normalize the text by converting to lowercase and removing punctuation
 import string
