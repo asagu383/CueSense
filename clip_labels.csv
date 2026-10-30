@@ -1,0 +1,19 @@
+clip_id,split,intended_text,expected_cue
+cue01,development,"Wait, I think I heard something just now.",C01
+cue02,development,"There's no turning back now.",C02
+cue03,development,"Something strange is going on up there.",C03
+nocue01,development,"I think we should go home now.",NONE
+nocue02,development,"Did you remember to bring your keys?",NONE
+nocue03,development,"Wait, I think I left something behind.",NONE
+test_cue01a,test,"Wait, I think I heard something just now.",C01
+test_cue01b,test,"Wait, I think I heard something just now.",C01
+test_cue02a,test,"There's no turning back now.",C02
+test_cue02b,test,"There's no turning back now.",C02
+test_cue03a,test,"Something strange is going on up there.",C03
+test_cue03b,test,"Something strange is going on up there.",C03
+test_nocue01,test,"It's going to start pouring soon.",NONE
+test_nocue02,test,"Take five steps back please.",NONE
+test_nocue03,test,"Everyone! I have an announcement.",NONE
+test_nocue04,test,"Wait, I think I heard someone outside.",NONE
+test_nocue05,test,"There's no going back to whatever that was!",NONE
+test_nocue06,test,"Something strange is happening down there.",NONE
