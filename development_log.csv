@@ -1,0 +1,13 @@
+clip_id,split,condition,intended_text,expected_cue,asr_text,method,threshold,score,predicted_cue,processing_seconds
+cue01,development,clean,"Wait, I think I heard something just now.",C01,"Wait, I think I heard something just now.",exact,N/A,N/A,C01,0.616
+cue01,development,clean,"Wait, I think I heard something just now.",C01,"Wait, I think I heard something just now.",fuzzy,90,100.0,C01,0.616
+cue02,development,clean,There's no turning back now.,C02,There's no turning back now.,exact,N/A,N/A,C02,0.57
+cue02,development,clean,There's no turning back now.,C02,There's no turning back now.,fuzzy,90,100.0,C02,0.57
+cue03,development,clean,Something strange is going on up there.,C03,Something strange is going on there.,exact,N/A,N/A,NONE,0.579
+cue03,development,clean,Something strange is going on up there.,C03,Something strange is going on there.,fuzzy,90,95.89,C03,0.579
+nocue01,development,clean,I think we should go home now.,NONE,I think we should go home now.,exact,N/A,N/A,NONE,0.603
+nocue01,development,clean,I think we should go home now.,NONE,I think we should go home now.,fuzzy,90,55.88,NONE,0.603
+nocue02,development,clean,Did you remember to bring your keys?,NONE,Did you remember to bring your keys?,exact,N/A,N/A,NONE,0.591
+nocue02,development,clean,Did you remember to bring your keys?,NONE,Did you remember to bring your keys?,fuzzy,90,38.36,NONE,0.591
+nocue03,development,clean,"Wait, I think I left something behind.",NONE,"Wait, I think I left something behind.",exact,N/A,N/A,NONE,0.559
+nocue03,development,clean,"Wait, I think I left something behind.",NONE,"Wait, I think I left something behind.",fuzzy,90,74.67,NONE,0.559

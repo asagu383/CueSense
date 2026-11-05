@@ -3,6 +3,7 @@
 from faster_whisper import WhisperModel
 import string
 import csv
+import time
 
 from rapidfuzz import fuzz
 
@@ -15,6 +16,24 @@ cues = {
     "theres no turning back now": "CURTAIN CLOSE",
     "something strange is going on up there": "LIGHTS PURPLE"
 }
+
+# Map cue actions to cue IDs for evaluation
+cue_ids = {
+    "FOOTSTEPS": "C01",
+    "CURTAIN CLOSE": "C02",
+    "LIGHTS PURPLE": "C03",
+    "NONE": "NONE"
+}
+
+# Load expected labels for the recordings
+clip_labels = {}
+
+with open("clip_labels.csv", "r", encoding="utf-8-sig", newline="") as file:
+    reader = csv.DictReader(file)
+
+    for row in reader:
+        clip_labels[row["clip_id"]] = row
+
 
 # Compare a transcript against the cue lines using fuzzy matching
 def fuzzy_match(transcript, threshold=90):
@@ -47,8 +66,11 @@ def fuzzy_match(transcript, threshold=90):
 # tiny.en small model designed for English speech
 model = WhisperModel("tiny.en", device="cpu", compute_type="int8")
 
-# List of audio recordings to process
-audio_files = [
+# Ask the user which dataset to process
+dataset = input("Choose dataset (development/test): ").strip().lower()
+
+# Development recordings
+development_files = [
     "cue01.wav",
     "cue02.wav",
     "cue03.wav",
@@ -57,12 +79,54 @@ audio_files = [
     "nocue03.wav"
 ]
 
+# Held-out test recordings
+test_files = [
+    "test_cue01a.wav",
+    "test_cue01b.wav",
+    "test_cue02a.wav",
+    "test_cue02b.wav",
+    "test_cue03a.wav",
+    "test_cue03b.wav",
+    "test_nocue01.wav",
+    "test_nocue02.wav",
+    "test_nocue03.wav",
+    "test_nocue04.wav",
+    "test_nocue05.wav",
+    "test_nocue06.wav"
+]
+
+# Prompt to select the appropriate recordings
+if dataset == "development":
+    audio_files = development_files
+    output_file = "development_log.csv"
+elif dataset == "test":
+    audio_files = test_files
+    output_file = "test_log.csv"
+else:
+    raise ValueError("Please enter 'development' or 'test'.")
+
 # Process each recording and save the results
-with open("event_log.csv", "w", newline="", encoding="utf-8") as file:
+with open(output_file, "w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow(["clip_id", "transcript", "exact_cue", "fuzzy_80", "fuzzy_90", "fuzzy_95", "fuzzy_score"])
+    
+    writer.writerow([
+    "clip_id",
+    "split",
+    "condition",
+    "intended_text",
+    "expected_cue",
+    "asr_text",
+    "method",
+    "threshold",
+    "score",
+    "predicted_cue",
+    "processing_seconds"
+    ])
 
     for audio_file in audio_files:
+        # Start timing this recording
+        start_time = time.perf_counter()
+
         # Transcribe recording
         segments, info = model.transcribe(audio_file, language="en")
 
@@ -79,25 +143,60 @@ with open("event_log.csv", "w", newline="", encoding="utf-8") as file:
         else:
             exact_cue = "NONE"
 
-        # Fuzzy matching with 3 diff. thresholds
-        fuzzy_cue_80, fuzzy_score = fuzzy_match(normalized_transcript, 80)
-        fuzzy_cue_90, _ = fuzzy_match(normalized_transcript, 90)
-        fuzzy_cue_95, _ = fuzzy_match(normalized_transcript, 95)
+        # Fuzzy matching using the selected threshold of 90
+        fuzzy_cue, fuzzy_score = fuzzy_match(normalized_transcript)
+
+        # Convert detected actions to cue IDs
+        exact_cue_id = cue_ids[exact_cue]
+        fuzzy_cue_id = cue_ids[fuzzy_cue]
+
+        # Calculate processing time in seconds
+        processing_time = time.perf_counter() - start_time
 
         # Display the results
-        # Note similarity score will be the same regardless of threshold
         print("Exact matching:", exact_cue)
-        print("Fuzzy matching (80):", fuzzy_cue_80)
-        print("Fuzzy matching (90):", fuzzy_cue_90)
-        print("Fuzzy matching (95):", fuzzy_cue_95)
+        print("Exact cue ID:", exact_cue_id)
+        print("Fuzzy matching (90):", fuzzy_cue)
+        print("Fuzzy cue ID:", fuzzy_cue_id)
         print("Best similarity score:", round(fuzzy_score, 2))
+        print("Processing time:", round(processing_time, 3), "seconds")
 
-        # Save to event log (separate rows)
+        # Save results to event log
         clip_id = audio_file.replace(".wav", "")
-        writer.writerow([clip_id, transcript, exact_cue, fuzzy_cue_80, fuzzy_cue_90, fuzzy_cue_95, round(fuzzy_score, 2)])
+        label = clip_labels[clip_id]
+
+        # Exact matching result
+        writer.writerow([
+            clip_id,
+            label["split"],
+            "clean",
+            label["intended_text"],
+            label["expected_cue"],
+            transcript,
+            "exact",
+            "N/A",
+            "N/A",
+            exact_cue_id,
+            round(processing_time, 3)
+        ])
+
+        # Fuzzy matching result
+        writer.writerow([
+            clip_id,
+            label["split"],
+            "clean",
+            label["intended_text"],
+            label["expected_cue"],
+            transcript,
+            "fuzzy",
+            90,
+            round(fuzzy_score, 2),
+            fuzzy_cue_id,
+            round(processing_time, 3)
+        ])
 
         print("Audio file:", audio_file)
         print("Transcription:", transcript)
         print("------------------------------")
 
-print("All results saved to event_log.csv")
+print("All results saved to", output_file)
