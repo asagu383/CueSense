@@ -1,0 +1,25 @@
+clip_id,split,condition,intended_text,expected_cue,asr_text,method,threshold,score,predicted_cue,processing_seconds
+test_cue01a,test,clean,"Wait, I think I heard something just now.",C01,Wait. I think I heard something just now.,exact,N/A,N/A,C01,0.521
+test_cue01a,test,clean,"Wait, I think I heard something just now.",C01,Wait. I think I heard something just now.,fuzzy,90,100.0,C01,0.521
+test_cue01b,test,clean,"Wait, I think I heard something just now.",C01,"Wait, I think I heard something just now.",exact,N/A,N/A,C01,0.523
+test_cue01b,test,clean,"Wait, I think I heard something just now.",C01,"Wait, I think I heard something just now.",fuzzy,90,100.0,C01,0.523
+test_cue02a,test,clean,There's no turning back now.,C02,There's no turning back now.,exact,N/A,N/A,C02,0.539
+test_cue02a,test,clean,There's no turning back now.,C02,There's no turning back now.,fuzzy,90,100.0,C02,0.539
+test_cue02b,test,clean,There's no turning back now.,C02,There's no turning back now.,exact,N/A,N/A,C02,0.621
+test_cue02b,test,clean,There's no turning back now.,C02,There's no turning back now.,fuzzy,90,100.0,C02,0.621
+test_cue03a,test,clean,Something strange is going on up there.,C03,Something strange is going on up there.,exact,N/A,N/A,C03,0.713
+test_cue03a,test,clean,Something strange is going on up there.,C03,Something strange is going on up there.,fuzzy,90,100.0,C03,0.713
+test_cue03b,test,clean,Something strange is going on up there.,C03,Something strange is going on up there.,exact,N/A,N/A,C03,0.606
+test_cue03b,test,clean,Something strange is going on up there.,C03,Something strange is going on up there.,fuzzy,90,100.0,C03,0.606
+test_nocue01,test,clean,It's going to start pouring soon.,NONE,It's going to start pouring soon!,exact,N/A,N/A,NONE,0.544
+test_nocue01,test,clean,It's going to start pouring soon.,NONE,It's going to start pouring soon!,fuzzy,90,49.28,NONE,0.544
+test_nocue02,test,clean,Take five steps back please.,NONE,"Take five steps back, please.",exact,N/A,N/A,NONE,0.576
+test_nocue02,test,clean,Take five steps back please.,NONE,"Take five steps back, please.",fuzzy,90,41.51,NONE,0.576
+test_nocue03,test,clean,Everyone! I have an announcement.,NONE,"Everyone, I have an announcement.",exact,N/A,N/A,NONE,0.569
+test_nocue03,test,clean,Everyone! I have an announcement.,NONE,"Everyone, I have an announcement.",fuzzy,90,37.68,NONE,0.569
+test_nocue04,test,clean,"Wait, I think I heard someone outside.",NONE,Wait. I think I heard someone outside.,exact,N/A,N/A,NONE,0.527
+test_nocue04,test,clean,"Wait, I think I heard someone outside.",NONE,Wait. I think I heard someone outside.,fuzzy,90,77.33,NONE,0.527
+test_nocue05,test,clean,There's no going back to whatever that was!,NONE,There's no going back to whatever that was.,exact,N/A,N/A,NONE,0.669
+test_nocue05,test,clean,There's no going back to whatever that was!,NONE,There's no going back to whatever that was.,fuzzy,90,62.69,NONE,0.669
+test_nocue06,test,clean,Something strange is happening down there.,NONE,Something strange is happening down there.,exact,N/A,N/A,NONE,0.554
+test_nocue06,test,clean,Something strange is happening down there.,NONE,Something strange is happening down there.,fuzzy,90,83.54,NONE,0.554
