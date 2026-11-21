@@ -1,0 +1,5 @@
+# Put this file beside the existing frozen requirements.txt.
+# Install into .venv-demo, NOT into the environment used for final evaluation.
+-r requirements.txt
+sounddevice==0.5.3
+soundfile==0.13.1
